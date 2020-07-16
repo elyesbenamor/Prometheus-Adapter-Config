@@ -1,3 +1,7 @@
+image: docker:latest
+services:
+  - docker:dind
+
 
 stages:
   - deploy
@@ -18,7 +22,7 @@ variables:
 deploy:yamls:
   stage: deploy
   #image: thorstenhans/helm3
-  image: linkyard/docker-helm
+  #image: linkyard/docker-helm
   variables:
     NAMESPACE: 'custom-metrics'
   before_script:
