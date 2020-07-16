@@ -24,21 +24,16 @@ deploy:yamls:
   before_script:
     - mkdir $HOME/prometheus-adapter-charts
     - cd $HOME/prometheus-adapter-charts
+    - cat $KUBECONFIG_CONTENT > $HOME/.kube/config
+    - export KUBECONFIG="$HOME/.kube/config"
+    - apk update  && apk add --no-cache curl
+    - curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+    - chmod +x ./kubectl 
+    - mv ./kubectl /usr/local/bin/kubectl
+    - kubectl version --client
     - helm init
     - helm repo add stable https://kubernetes-charts.storage.googleapis.com
-    - helm repo update
-  #  - cat $KUBECONFIG_CONTENT > $HOME/.kube/config
-  #  - export KUBECONFIG="$HOME/.kube/config"
-  #  - apk update  && apk add --no-cache curl
-  #  - curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
-  #  - chmod +x ./kubectl 
-  #  - mv ./kubectl /usr/local/bin/kubectl
-  #  - kubectl version --client
-  #  - curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
-  #  - chmod 700 get_helm.sh
-  #  - ./get_helm.sh
-  #  - helm repo add stable https://kubernetes-charts.storage.googleapis.com/
-  #  - helm repo update
+    - helm repo update 
 
   script:
     #- helm repo add stable https://kubernetes-charts.storage.googleapis.com
