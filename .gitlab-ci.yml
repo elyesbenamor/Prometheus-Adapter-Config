@@ -1,6 +1,6 @@
-image: docker:latest
-services:
-  - docker:dind
+#image: docker:latest
+##services:
+ # - docker:dind
 
 
 stages:
@@ -18,25 +18,25 @@ variables:
   RANCHER_ACCESS_KEY: token-dq9lz
   RANCHER_SECRET_KEY: nxvfjxdv5ds2jb6v76pxns7kzbhkx9r9b9882ffd6gpm5pdk6xsbxv
 
-#alpine/helm:latest
+#alpine/helm:latest thorstenhans/helm3
 deploy:yamls:
   stage: deploy
-  #image: thorstenhans/helm3
+  image: dtzar/helm-kubectl
   #image: linkyard/docker-helm
   variables:
     NAMESPACE: 'custom-metrics'
   before_script:
-    - mkdir $HOME/.kube
-    - cd $HOME/.kube && touch config
-    - cat $KUBECONFIG_CONTENT > $HOME/.kube/config
-    - export KUBECONFIG="$HOME/.kube/config"
-    
-    - apk update  && apk add --no-cache curl
-    - curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
-    - chmod +x ./kubectl 
-    - mv ./kubectl /usr/local/bin/kubectl
+    #- mkdir $HOME/.kube
+    #- cd $HOME/.kube && touch config
+    #- cat $KUBECONFIG_CONTENT > $HOME/.kube/config
+    #- export KUBECONFIG="$HOME/.kube/config"
+    #
+    #- apk update  && apk add --no-cache curl
+    #- curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+    #- chmod +x ./kubectl 
+    #- mv ./kubectl /usr/local/bin/kubectl
     - kubectl version --client
-    - helm init
+    #- helm init
     - helm repo add stable https://kubernetes-charts.storage.googleapis.com
     - helm repo update 
 
