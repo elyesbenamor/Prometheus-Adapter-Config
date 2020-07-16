@@ -46,39 +46,39 @@ resources:
 rules:
   default: true
   custom: 
- - seriesQuery: '{__name__=~"^some_metric_count$"}'
-   resources:
-     template: <<.Resource>>
-   name:
-     matches: ""
-     as: "my_custom_metric"
-   metricsQuery: sum(<<.Series>>{<<.LabelMatchers>>}) by (<<.GroupBy>>)
- - seriesQuery: '{namespace!="",__name__!~"^container_.*"}'
-   seriesFilters:
-   - isNot: .*_total$
-   resources:
-     template: <<.Resource>>
-   name:
-     matches: ""
-     as: ""
-   metricsQuery: sum(<<.Series>>{<<.LabelMatchers>>}) by (<<.GroupBy>>)
- - seriesQuery: '{namespace!="",__name__!~"^container_.*"}'
-   seriesFilters:
-   - isNot: .*_seconds_total
-   resources:
-     template: <<.Resource>>
-   name:
-     matches: ^(.*)_total$
-     as: ""
-   metricsQuery: sum(rate(<<.Series>>{<<.LabelMatchers>>}[1m])) by (<<.GroupBy>>)
- - seriesQuery: '{namespace!="",__name__!~"^container_.*"}'
-   seriesFilters: []
-   resources:
-     template: <<.Resource>>
-   name:
-     matches: ^(.*)_seconds_total$
-     as: ""
-   metricsQuery: sum(rate(<<.Series>>{<<.LabelMatchers>>}[1m])) by (<<.GroupBy>>)
+  - seriesQuery: '{__name__=~"^some_metric_count$"}'
+    resources:
+      template: <<.Resource>>
+    name:
+      matches: ""
+      as: "my_custom_metric"
+    metricsQuery: sum(<<.Series>>{<<.LabelMatchers>>}) by (<<.GroupBy>>)
+  - seriesQuery: '{namespace!="",__name__!~"^container_.*"}'
+    seriesFilters:
+    - isNot: .*_total$
+    resources:
+      template: <<.Resource>>
+    name:
+      matches: ""
+      as: ""
+    metricsQuery: sum(<<.Series>>{<<.LabelMatchers>>}) by (<<.GroupBy>>)
+  - seriesQuery: '{namespace!="",__name__!~"^container_.*"}'
+    seriesFilters:
+    - isNot: .*_seconds_total
+    resources:
+      template: <<.Resource>>
+    name:
+      matches: ^(.*)_total$
+      as: ""
+    metricsQuery: sum(rate(<<.Series>>{<<.LabelMatchers>>}[1m])) by (<<.GroupBy>>)
+  - seriesQuery: '{namespace!="",__name__!~"^container_.*"}'
+    seriesFilters: []
+    resources:
+      template: <<.Resource>>
+    name:
+      matches: ^(.*)_seconds_total$
+      as: ""
+    metricsQuery: sum(rate(<<.Series>>{<<.LabelMatchers>>}[1m])) by (<<.GroupBy>>)
 
 
   # Mounts a configMap with pre-generated rules for use. Overrides the
