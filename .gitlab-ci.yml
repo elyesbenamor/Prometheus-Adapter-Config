@@ -24,6 +24,7 @@ deploy:yamls:
   before_script:
     - mkdir $HOME/prometheus-adapter-charts
     - cd $HOME/prometheus-adapter-charts
+    - helm init
     - helm repo add stable https://kubernetes-charts.storage.googleapis.com
     - helm repo update
   #  - cat $KUBECONFIG_CONTENT > $HOME/.kube/config
