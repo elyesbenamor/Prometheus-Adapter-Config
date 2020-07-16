@@ -17,12 +17,15 @@ variables:
 #alpine/helm:latest
 deploy:yamls:
   stage: deploy
-  image: thorstenhans/helm3
+  #image: thorstenhans/helm3
+  image: linkyard/docker-helm
   variables:
     NAMESPACE: 'custom-metrics'
-  #before_script:
-  #  - mkdir $HOME/.kube
-  #  - cd $HOME/.kube && touch config
+  before_script:
+    - mkdir $HOME/prometheus-adapter-charts
+    - cd $HOME/prometheus-adapter-charts
+    - helm repo add stable https://kubernetes-charts.storage.googleapis.com
+    - helm repo update
   #  - cat $KUBECONFIG_CONTENT > $HOME/.kube/config
   #  - export KUBECONFIG="$HOME/.kube/config"
   #  - apk update  && apk add --no-cache curl
