@@ -35,7 +35,7 @@ serviceAccount:
   # If not set and create is true, a name is generated using the fullname template
   name: custom-metrics-apiserver
 
-resources: {}
+resources: 
    requests:
      cpu: 500m
      memory: 1Gi
