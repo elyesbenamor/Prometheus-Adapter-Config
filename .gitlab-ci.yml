@@ -1,0 +1,27 @@
+stages:
+  - deploy
+
+# ===
+# Settings
+variables:
+  #Docker
+  DOCKER_DRIVER: overlay
+  DOCKER_HOST: tcp://localhost:2375
+
+  #Rancher
+  RANCHER_URL_PRODUCTION: https://rancher2.vorwaerts.com
+  RANCHER_ACCESS_KEY: token-dq9lz
+  RANCHER_SECRET_KEY: nxvfjxdv5ds2jb6v76pxns7kzbhkx9r9b9882ffd6gpm5pdk6xsbxv
+
+
+deploy:yamls:
+  stage: deploy
+  image: thorstenhans/helm3
+  variables:
+    NAMESPACE: 'custom-metrics'
+
+  script:
+    - helm init --upgrade
+    - helm repo add stable https://kubernetes-charts.storage.googleapis.com
+    - helm repo update
+    - helm install adapter stable/prometheus-adapter --values $CI_PROJECT_DIR/values.yaml --namespace "$NAMESPACE"
